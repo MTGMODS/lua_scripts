@@ -81,15 +81,6 @@
         "info": "Хелпер для сотрудников ТСР (тюрьмы) (/ph)"
     },
     {
-        "name": "Weapon FIX",
-        "ver": "1",
-        "author": "dmk",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/weapon_fix/weapfixxx.lua",
-        "img": "",
-        "platform": "MOBILE",
-        "info": "Фикс пропажи оружия, автор фикса dmk (dev arzmod)"
-    },
-    {
         "name": "AutoDoor",
         "ver": "9",
         "author": "MTG MODS",
