@@ -216,6 +216,15 @@
         "info": "Чистка неактива фракции (/fcleaner)"
     },
     {
+        "name": "Travka",
+        "ver": "1.0",
+        "author": "MTG MODS",
+        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/radius_travki/RadiusTravki.lua",
+        "img": "",
+        "platform": "PC + MOBILE",
+        "info": "Помощник сбора Счастливой Травки /"
+    },
+    {
         "name": "AutoSell Fish Items",
         "ver": "1.0",
         "author": "MTG MODS",
