@@ -3,7 +3,7 @@
 script_name("FD Helper")
 script_description('This is a Cross-platform Lua script helper for Arizona RP players who work in the Ministry of')
 script_author("MTG MODS")
-script_version("1.3")
+script_version("1.4")
 
 require('lib.moonloader')
 require('encoding').default = 'CP1251'
@@ -263,7 +263,6 @@ local commands = {
 		{ cmd = 'time' , description = 'Посмотреть время' ,  text = '/me взглянул{sex} на свои часы с гравировкой MTG MODS и посмотрел{sex} время&/time&/do На часах видно время {get_time}.' , arg = '' , enable = true, waiting = '1.500' , bind = "{}"  },
 	},
 	commands_manage = {
-		{ cmd = 'book' , description = 'Выдача игроку трудовой книги' , text = 'Оказывается у вас нету трудовой книги, но не переживайте!&Сейчас я вам выдам её, вам не нужно никуда ехать, секунду...&/me достаёт из своего кармана новую трудовую книжку и ставит на ней печать {fraction_tag}&/todo Берите*передавая трудовую книгу челоку напротив&/givewbook {arg_id} 100&/n {get_nick({arg_id})}, примите предложение в /offer чтобы получить трудовую книгу!' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}"  },
 		{ cmd = 'inv' , description = 'Принятие игрока в фракцию' , text = '/do В кармане есть связка с ключами от раздевалки.&/me достаёт из кармана один ключ из связки ключей от раздевалки&/todo Возьмите, это ключ от нашей раздевалки*передавая ключ человеку напротив&/invite {arg_id}&/n {get_ru_nick({arg_id})} , примите предложение в /offer чтобы получить инвайт!' , arg = '{arg_id}', enable = true, waiting = '1.500'  , bind = "{}"  },
 		{ cmd = 'rp' , description = 'Выдача сотруднику /fractionrp' , text = '/fractionrp {arg_id}' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}"  },
 		{ cmd = 'gr' , description = 'Повышение/понижение cотрудника' , text = '{show_rank_menu}&/me достаёт из кармана свой телефон и заходит в базу данных {fraction_tag}&/me изменяет информацию о сотруднике {get_ru_nick({arg_id})} в базе данных {fraction_tag}&/me выходит с базы данных и убирает телефон обратно в карман&/giverank {arg_id} {get_rank}&/r Сотрудник {get_ru_nick({arg_id})} получил новую должность!' , arg = '{arg_id}', enable = true, waiting = '1.500', bind = "{}"   },
@@ -924,6 +923,7 @@ function initialize_commands()
 				members_new = {} 
 				members_check = true 
 				sampSendChat("/members")
+				sampAddChatMessage('[FD Helper] {ffffff}В VIP версии доступно авто-обновление /members', message_color)
 			end
 		else
 			sampAddChatMessage('[FD Helper] {ffffff}Дождитесь завершения отыгровки предыдущей команды!', message_color)
@@ -1471,7 +1471,7 @@ end
 function sampev.onServerMessage(color,text)
 	--sampAddChatMessage('color = ' .. color .. ' ' .. argbToHex(color) ' text = '..text,-1)
 	if (settings.general.auto_uval and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1495,7 +1495,7 @@ function sampev.onServerMessage(color,text)
 					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1538,17 +1538,6 @@ function sampev.onServerMessage(color,text)
 				end
 			end)
 		end
-	end
-	if (text:find("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook") and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		local nick = text:match("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook")
-		local cmd = '/givewbook'
-		for _, command in ipairs(commands.commands_manage) do
-			if command.enable and command.text:find('/givewbook {arg_id}') then
-				cmd =  '/' .. command.cmd
-			end
-		end
-		sampAddChatMessage('[FD Helper] {ffffff}У игрока ' .. nick .. ' нету трудовой книжки, выдайте её используя ' .. message_color_hex .. cmd .. ' ' .. sampGetPlayerIdByNickname(nick), message_color)
-		return false
 	end
 	if text:find("1%.{6495ED} 111 %- {FFFFFF}Проверить баланс телефона") or
 		text:find("2%.{6495ED} 060 %- {FFFFFF}Служба точного времени") or
@@ -2431,20 +2420,26 @@ imgui.OnFrame(
 							imgui.EndChild()
 						end
 						if imgui.Button(fa.CIRCLE_PLUS .. u8' Создать новую команду##new_cmd',imgui.ImVec2(imgui.GetMiddleButtonX(1), 0)) then
-							local new_cmd = {cmd = '', description = '', text = '', arg = '', enable = true , waiting = '1.500' , bind = "{}"  }
-							binder_create_command_9_10 = false
-							table.insert(commands.commands, new_cmd)
-							input_description = imgui.new.char[256](u8(new_cmd.description))
-							change_arg = new_cmd.arg
-							change_bind = new_cmd.bind
-							ComboTags[0] = 0
-							change_cmd = new_cmd.cmd
-							input_cmd = imgui.new.char[256](u8(new_cmd.cmd))
-							change_text = new_cmd.text:gsub('&', '\n')
-							input_text = imgui.new.char[8192](u8(change_text))
-							change_waiting = 1.200
-							waiting_slider = imgui.new.float(1.200)	
-							BinderWindow[0] = true
+							if #commands.commands >= 10 then
+								for i = 1, 10, 1 do
+									sampAddChatMessage('[FD Helper] {ffffff}Лимит FREE версии на 10 команд, безлим в платной версии хелпера! Покупать у MTG MODS', message_color)
+								end
+							else
+								local new_cmd = {cmd = '', description = '', text = '', arg = '', enable = true , waiting = '1.500' , bind = "{}"  }
+								binder_create_command_9_10 = false
+								table.insert(commands.commands, new_cmd)
+								input_description = imgui.new.char[256](u8(new_cmd.description))
+								change_arg = new_cmd.arg
+								change_bind = new_cmd.bind
+								ComboTags[0] = 0
+								change_cmd = new_cmd.cmd
+								input_cmd = imgui.new.char[256](u8(new_cmd.cmd))
+								change_text = new_cmd.text:gsub('&', '\n')
+								input_text = imgui.new.char[8192](u8(change_text))
+								change_waiting = 1.200
+								waiting_slider = imgui.new.float(1.200)	
+								BinderWindow[0] = true
+							end
 						end
 						imgui.EndTabItem()
 					end
@@ -2770,9 +2765,15 @@ imgui.OnFrame(
 				end
 				imgui.EndChild()
 				if imgui.Button(fa.CIRCLE_PLUS .. u8' Создать новую заметку', imgui.ImVec2(imgui.GetMiddleButtonX(1), 0)) then
-					input_name_note = imgui.new.char[256](u8("Название"))
+					if #notes.note >= 10 then
+						for i = 1, 10, 1 do
+							sampAddChatMessage('[FD Helper] {ffffff}Лимит FREE версии на 10 заметок, безлим в платной версии хелпера! Покупать у MTG MODS', message_color)
+						end
+					else
+						input_name_note = imgui.new.char[256](u8("Название"))
 					input_text_note = imgui.new.char[16384](u8("Текст"))
 					imgui.OpenPopup(fa.PEN_TO_SQUARE .. u8' Создание заметки')	
+					end
 				end
 				if imgui.BeginPopupModal(fa.PEN_TO_SQUARE .. u8' Создание заметки', _, imgui.WindowFlags.NoCollapse  + imgui.WindowFlags.NoResize ) then
 					

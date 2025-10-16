@@ -6,7 +6,7 @@
         "link": "https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/Arizona%20Helper.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1261913114337873961/IMG_20240714_081151.jpg?ex=6748a46b&is=674752eb&hm=3264a1f936434a74e640f323458712cc823153b6ab95ca1d28b0332b02470472&",
         "platform": "PC + MOBILE",
-        "info": "Хелпер для ЛЮБОЙ фракции (/helper)"
+        "info": "Универсальный хелпер для аризоны (/helper) | Замена старых хелперов"
     },
     {
         "name": "Justice Helper",
@@ -46,7 +46,7 @@
     },
     {
         "name": "FD Helper",
-        "ver": "1.3",
+        "ver": "1.4",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/fd_helper/FD%20Helper.lua",
         "img": "",
@@ -61,15 +61,6 @@
         "img": "https://media.discordapp.net/attachments/1251238756435099750/1283407807302996008/2024-09-11_174406.png?ex=674865a9&is=67471429&hm=c5b967277afba7fd4459c5db3439b64834c14cf5e02a3e1dde47070073b78c3b&=&format=webp&quality=lossless",
         "platform": "PC + MOBILE",
         "info": "Хелпер для сотрудников Правительства (/gh)"
-    },
-    {
-        "name": "Prison Helper",
-        "ver": "0.3.12.2",
-        "author": "MTG MODS + tim_star",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/prison_helper/Prison%20Helper.lua",
-        "img": "",
-        "platform": "PC + MOBILE",
-        "info": "Хелпер для сотрудников ТСР (тюрьмы) (/ph)"
     },
     {
         "name": "AutoDoor",
