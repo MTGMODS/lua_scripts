@@ -5,12 +5,11 @@ local players_to_kick = {}
 
 function kick_players()
     lua_thread.create(function ()
-        wait(1000)
         for index, value in ipairs(players_to_kick) do
             reason_day = value.day
             sampSendChat('/uninviteoff ' .. value.nickname)
-            printStringNow(index .. '/' .. #players_to_kick, 300)
-            wait(1000)
+            printStringNow(index .. '/' .. #players_to_kick, 2000)
+            wait(2000)
         end
         uninvite = false
     end)

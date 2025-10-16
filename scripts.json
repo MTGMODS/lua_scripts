@@ -54,15 +54,6 @@
         "info": "Хелпер для сотрудников Пожарного Депортамента (/fh)"
     },
     {
-        "name": "Mafia Helper",
-        "ver": "0.99",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/mafia_helper/Mafia%20Helper.lua",
-        "img": "",
-        "platform": "PC + MOBILE",
-        "info": "Хелпер для Мафий (/mh)"
-    },
-    {
         "name": "Government Helper",
         "ver": "1.2",
         "author": "MTG MODS + introv3rt",
