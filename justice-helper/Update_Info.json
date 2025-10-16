@@ -1,5 +1,5 @@
 {
-  "current_version": "2.2 Free",
+  "current_version": "2.3 Free",
   "update_url": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/justice-helper/Justice%20Helper.lua",
-  "update_info": "- Переход на новое облако для поддержки умного розыска и штрафов\n- Фикс Авто Увала\n- Финальное обновление перед переходом на Arizona Helper"
+  "update_info": "- \n- Фикс Авто Увала\n- Удаление ненужных функций\n- Финальное обновление перед переходом на Arizona Helper"
 }

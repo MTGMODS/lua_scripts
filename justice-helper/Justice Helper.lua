@@ -1,9 +1,9 @@
 ---@diagnostic disable: undefined-global, need-check-nil, lowercase-global, cast-local-type, unused-local
 
 script_name("Justice Helper")
-script_description('This is a Cross-platform Lua script helper for Arizona RP players who work in the Ministry of Justice (PD and FBI) ??and the Ministry of Defense (Army)')
+script_description('This is a Cross-platform Lua script helper for Arizona RP players who work in the Ministry of Justice (PD and FBI) and the Ministry of Defense (Army)')
 script_author("MTG MODS")
-script_version("2.2 Free")
+script_version("2.3 Free")
 
 require('lib.moonloader')
 require('encoding').default = 'CP1251'
@@ -532,7 +532,6 @@ local commands = {
 		{ cmd = 'agenda' , description = 'Выдача повестки игроку' ,  text = '/do В папке с документами лежит ручка и пустой бланк с надписью Повестка.&/me достаёт из папки ручку с пустым бланком повестки&/me начинает заполнять все необходимые поля на бланке повестки&/do Все данные в повестке заполнены.&/me ставит на повестку штамп и печать {fraction_tag}&/do Готовый бланк повестки в руках.&/todo Не забудьте явиться в военкомат по указанному адресу и времени*передавая повестку&/agenda {arg_id}', arg = '{arg_id}', enable = true, waiting = '1.500', bind = "{}", in_fastmenu = true },
 	},
 	commands_manage = {
-		{ cmd = 'book' , description = 'Выдача игроку трудовой книги' , text = 'Оказывается у вас нету трудовой книги, но не переживайте!&Сейчас я вам выдам её, вам не нужно никуда ехать, секунду...&/me достаёт из своего кармана новую трудовую книжку и ставит на ней печать {fraction_tag}&/todo Берите*передавая трудовую книгу челоку напротив&/givewbook {arg_id} 100&/n {get_nick({arg_id})}, примите предложение в /offer чтобы получить трудовую книгу!' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}", in_fastmenu = true  },
 		{ cmd = 'inv' , description = 'Принятие игрока в фракцию' , text = '/do В кармане есть связка с ключами от раздевалки.&/me достаёт из кармана один ключ из связки ключей от раздевалки&/todo Возьмите, это ключ от нашей раздевалки*передавая ключ человеку напротив&/invite {arg_id}&/n {get_ru_nick({arg_id})} , примите предложение в /offer чтобы получить инвайт!' , arg = '{arg_id}', enable = true, waiting = '1.500'  , bind = "{}", in_fastmenu = true  },
 		{ cmd = 'rp' , description = 'Выдача сотруднику /fractionrp' , text = '/fractionrp {arg_id}' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}", in_fastmenu = true  },
 		{ cmd = 'gr' , description = 'Повышение/понижение cотрудника' , text = '{show_rank_menu}&/me достаёт из кармана свой телефон и заходит в базу данных {fraction_tag}&/me изменяет информацию о сотруднике {get_ru_nick({arg_id})} в базе данных {fraction_tag}&/me выходит с базы данных и убирает телефон обратно в карман&/giverank {arg_id} {get_rank}&/r Сотрудник {get_ru_nick({arg_id})} получил новую должность!' , arg = '{arg_id}', enable = true, waiting = '1.500', bind = "{}", in_fastmenu = true   },
@@ -1003,14 +1002,11 @@ local wanted = {}
 local wanted_new = {}
 local check_wanted = false
 local update_wanted_check = false
-local search_awanted = false
 
 local GiveRankMenu = imgui.new.bool()
 local giverank = imgui.new.int(5)
 
 local SobesMenu = imgui.new.bool()
-
-local FastPieMenu = imgui.new.bool()
 
 local PatroolMenu = imgui.new.bool()
 local PatroolInfoMenu = imgui.new.bool()
@@ -1039,7 +1035,6 @@ local CommandPauseWindow = imgui.new.bool()
 
 local LeaderFastMenu = imgui.new.bool()
 local FastMenu = imgui.new.bool()
-local FastPieMenu = imgui.new.bool()
 local FastMenuButton = imgui.new.bool()
 local FastMenuPlayers = imgui.new.bool()
 local MegafonWindow = imgui.new.bool()
@@ -1427,8 +1422,6 @@ local platoon_check = false
 
 local enemy = {}
 
-local afind = false
-
 local InfraredVision = false
 local NightVision = false
 
@@ -1787,10 +1780,6 @@ function initialize_commands()
 					updwanteds_last_time = os.time()
 					update_wanted_check = true
 					WantedWindow[0] = true
-					if settings.general.auto_find_wanteds and awanted then
-						search_awanted = true
-						sampAddChatMessage('[Justice Helper - AWANTED] {ffffff}Вы можете закрыть это окно и ввести /awanted', message_color)
-					end
 				end
 			end)
 		else
@@ -3081,7 +3070,7 @@ end
 function sampev.onServerMessage(color,text)
 	--sampAddChatMessage('color = ' .. color .. ' ' .. argbToHex(color) ' text = '..text,-1)
 	if (settings.general.auto_uval and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -3105,7 +3094,7 @@ function sampev.onServerMessage(color,text)
 					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -3150,42 +3139,20 @@ function sampev.onServerMessage(color,text)
 		end
 	end
 	if tonumber(settings.player_info.fraction_rank_number) >= 5 then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			if message:find('Прошу обьявить в розыск (%d) степени дело N(%d+)%. Причина%: (.+)') then
 				local lvl, id, reason = message:match('Прошу обьявить в розыск (%d) степени дело N(%d+)%. Причина%: (.+)')
 				form_su = id .. ' ' .. lvl .. ' ' .. reason
 				sampAddChatMessage('[Justice Helper] {ffffff}Используйте /givefsu ' .. playerID .. ' чтобы выдать розыск по запросу офицера ' .. name, message_color)
 			end
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			local lvl, id, reason = message:match('Прошу обьявить в розыск (%d) степени дело N(%d+)%. Причина%: (.+)')
 				form_su = id .. ' ' .. lvl .. ' ' .. reason
 				sampAddChatMessage('[Justice Helper] {ffffff}Используйте /givefsu ' .. playerID .. ' чтобы выдать розыск по запросу офицера ' .. name, message_color)
 		end
 	end
-	if (text:find("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook") and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		local nick = text:match("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook")
-		local cmd = '/givewbook'
-		for _, command in ipairs(commands.commands_manage) do
-			if command.enable and command.text:find('/givewbook {arg_id}') then
-				cmd =  '/' .. command.cmd
-			end
-		end
-		sampAddChatMessage('[Justice Helper] {ffffff}У игрока ' .. nick .. ' нету трудовой книжки, выдайте её используя ' .. message_color_hex .. cmd .. ' ' .. sampGetPlayerIdByNickname(nick), message_color)
-		return false
-	end
-	if (settings.general.auto_mask) then
-		if text:find('Время действия маски истекло, вам пришлось ее выбросить.') then
-			sampAddChatMessage('[Justice Helper] {ffffff}Время действия маски истекло! Автоматически надеваю новую', message_color)
-			sampProcessChatInput("/mask")
-			return false
-		elseif (text:find('Время действия маски (%d+) минут, после исхода времени ее придётся выбросить.')) then
-			local min = text:match('Время действия маски (%d+) минут, после исхода времени ее придётся выбросить.')
-			sampAddChatMessage('[Justice Helper] {ffffff}Время действия маски ' .. min .. ' минут, после исхода времени автоматически надеву новую!', message_color)
-			return false
-		end
-	end 
 	if text:find("1%.{6495ED} 111 %- {FFFFFF}Проверить баланс телефона") or
 		text:find("2%.{6495ED} 060 %- {FFFFFF}Служба точного времени") or
 		text:find("3%.{6495ED} 911 %- {FFFFFF}Полицейский участок") or
@@ -6643,28 +6610,6 @@ imgui.OnFrame(
     end
 )
 
--- imgui.OnFrame(
---     function() return NewHelperWindow[0] end,
---     function(player)
--- 		imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
--- 		imgui.Begin(fa.CIRCLE_INFO .. u8" Оповещение##NewHelper", _, imgui.WindowFlags.NoCollapse + imgui.WindowFlags.NoResize + imgui.WindowFlags.AlwaysAutoResize )
--- 		if not isMonetLoader() then change_dpi() end
--- 		imgui.CenterText(u8'У вас сейчас установлена версия хелпера ' .. u8(tostring(thisScript().version)) .. ".")
--- 		imgui.CenterText(u8'В базе данных найдена версия хелпера - ' .. u8(updateVer) .. ".")
--- 		if imgui.Button(fa.CIRCLE_XMARK .. u8' Остаться на Justice ',  imgui.ImVec2(300 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
--- 			UpdateWindow[0] = false
--- 		end
--- 		imgui.SameLine()
--- 		if imgui.Button(fa.DOWNLOAD ..u8' Загрузить новое поколение хелпера',  imgui.ImVec2(300 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
--- 			download_helper = true
--- 			downloadFileFromUrlToPath(updateUrl, path_helper)
--- 			UpdateWindow[0] = false
--- 		end
--- 		imgui.End()
---     end
--- )
-
-
 function imgui.CenterText(text)
     local width = imgui.GetWindowWidth()
     local calc = imgui.CalcTextSize(text)
@@ -6961,7 +6906,9 @@ function main()
 	if not isMonetLoader() then loadHotkeys() end
 	welcome_message()
 	initialize_commands()
-	
+
+	check_update()
+
 	if settings.player_info.name_surname == '' or settings.player_info.fraction == 'Неизвестно' then
 		sampAddChatMessage('[Justice Helper] {ffffff}Пытаюсь получить ваш /stats поскольку остуствуют данные про вас!', message_color)
 		check_stats = true
@@ -6977,10 +6924,6 @@ function main()
 		MegafonWindow[0] = true
 	end	
 	
-	if not string.rupper(settings.general.version):find('VIP') then
-		check_update()
-	end
-
 	while true do
 		wait(1)
 
