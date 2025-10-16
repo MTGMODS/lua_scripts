@@ -3,7 +3,7 @@
 script_name("Hospital Helper")
 script_description('Cross-platform script helper for Medical Center')
 script_author("MTG MODS")
-script_version("4.4")
+script_version("5.0")
 
 require('lib.moonloader')
 require ('encoding').default = 'CP1251'
@@ -1385,7 +1385,7 @@ function sampev.onServerMessage(color,text)
 	end
 	--sampAddChatMessage('color = ' .. color .. ' , text = '..text,-1)
 	if (settings.general.auto_uval and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1408,7 +1408,7 @@ function sampev.onServerMessage(color,text)
 					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1451,32 +1451,13 @@ function sampev.onServerMessage(color,text)
 			end)
 		end
 	end
-	if (text:find("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook") and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		local nick = text:match("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook")
-		local cmd = '/givewbook'
-		for _, command in ipairs(settings.commands_manage) do
-			if command.enable and command.text:find('/givewbook {arg_id}') then
-				cmd =  '/' .. command.cmd
-			end
-		end
-		sampAddChatMessage('[Hospital Helper] {ffffff}У игрока ' .. nick .. ' нету трудовой книжки, выдайте её используя ' .. message_color_hex .. cmd .. ' ' .. sampGetPlayerIdByNickname(nick), message_color)
-		return false
-	end
-	if ((settings.general.heal_in_chat or settings.general.auto_heal) and not heal_in_chat and not isActiveCommand) then	
+	if ((settings.general.heal_in_chat) and not heal_in_chat and not isActiveCommand) then	
 		if (text:find('(.+)%[(%d+)%] говорит:{B7AFAF} (.+)')) then
 			local nick, id, message = text:match('(.+)%[(%d+)%] говорит:{B7AFAF} (.+)')
 			if (nick and id and message and tonumber(id) ~= select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))) then
 				for pon, keyword in ipairs(world_heal_in_chat) do
 					if (message:rupper():find(keyword:rupper())) then
-						if settings.general.heal_in_chat then
-							fast_heal_in_chat(id)
-						elseif settings.general.auto_heal then
-							lua_thread.create(function ()
-								wait(50)
-								sampAddChatMessage('[Hospital Helper] {ffffff}Автоматический хил игрока ' .. sampGetPlayerNickname(id) .. " по просьбе: " .. keyword, message_color)
-								sampSendChat('/heal ' .. id .. ' ' .. tagReplacements.price_heal())
-							end)
-						end
+						fast_heal_in_chat(id)
 						break
 					end
 				end
@@ -1487,15 +1468,7 @@ function sampev.onServerMessage(color,text)
 			if (nick and id and message and tonumber(id) ~= select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))) then
 				for pon, keyword in ipairs(world_heal_in_chat) do
 					if (message:rupper():find(keyword:rupper())) then
-						if settings.general.heal_in_chat then
-							fast_heal_in_chat(id)
-						elseif settings.general.auto_heal then
-							lua_thread.create(function ()
-								wait(50)
-								sampAddChatMessage('[Hospital Helper] {ffffff}Автоматический хил игрока ' .. sampGetPlayerNickname(id) .. " по просьбе: " .. keyword, message_color)
-								sampSendChat('/heal ' .. id .. ' ' .. tagReplacements.price_heal())
-							end)
-						end
+						fast_heal_in_chat(id)
 						break
 					end
 				end
@@ -2123,7 +2096,7 @@ imgui.OnFrame(
 					imgui.Columns(1)
 					imgui.Separator()
 					imgui.Columns(3)
-					imgui.CenterColumnText(u8"Хил из чата (нажатие кнопки)")
+					imgui.CenterColumnText(u8"Хил из чата (нажатием кнопки)")
 					imgui.SameLine(nil, 5) imgui.TextDisabled("[?]")
 					if imgui.IsItemHovered() then
 						imgui.SetTooltip(u8"Позволяет нажатием одной кнопки быстро, по РП, лечить пациентов которые просят чтоб их вылечили")
@@ -2146,39 +2119,44 @@ imgui.OnFrame(
 								sampAddChatMessage('[Hospital Helper] {ffffff}Ошибка, нельзя включить "Хил из чата" так как у вас нету Mimgui Hotkeys!', message_color)
 							else
 								settings.general.heal_in_chat = true
-								settings.general.auto_heal = false
 								save_settings()
 							end
 							
 						end
 					end
+
 					imgui.Columns(1)
 					imgui.Separator()
 					imgui.Columns(3)
-					imgui.CenterColumnText(u8"Хил из чата (автоматически)")
+					imgui.CenterColumnText(u8"Авто Увал [9/10]")
 					imgui.SameLine(nil, 5) imgui.TextDisabled("[?]")
 					if imgui.IsItemHovered() then
-						imgui.SetTooltip(u8"Автоматически, без РП, лечит пациентов которые просят чтоб их вылечили")
+						imgui.SetTooltip(u8"Автоматическое увольнение сотрудников, которые хотят увал ПСЖ\nФункция доступна только если вы 9/10 ранг!")
 					end
 					imgui.NextColumn()
-					if settings.general.auto_heal then
+					if settings.general.auto_uval then
 						imgui.CenterColumnText(u8'Включено')
 					else
 						imgui.CenterColumnText(u8'Отключено')
 					end
 					imgui.NextColumn()
-					if settings.general.auto_heal then
-						if imgui.CenterColumnSmallButton(u8'Отключить##auto_heal') then
-							settings.general.auto_heal = false
+					if settings.general.auto_uval then
+						if imgui.CenterColumnSmallButton(u8'Отключить##auto_uval') then
+							settings.general.auto_uval = false
 							save_settings()
 						end
 					else
-						if imgui.CenterColumnSmallButton(u8'Включить##auto_heal') then
-							settings.general.auto_heal = true
-							settings.general.heal_in_chat = false
-							save_settings()
+						if imgui.CenterColumnSmallButton(u8'Включить##auto_uval') then
+							if tonumber(settings.player_info.fraction_rank_number) == 9 or tonumber(settings.player_info.fraction_rank_number) == 10 then 
+								settings.general.auto_uval = true
+								save_settings()
+							else
+								settings.general.auto_uval = false
+								sampAddChatMessage('[Hospital Helper] {ffffff}Эта Функция доступна только лидеру и заместителям!',message_color)
+							end
 						end
 					end
+
 					imgui.Columns(1)
 					imgui.Separator()
 					imgui.Columns(3)
@@ -2436,37 +2414,6 @@ imgui.OnFrame(
 								imgui.NextColumn()
 								imgui.CenterColumnText(u8"Действие")
 								imgui.SetColumnWidth(-1, 150 * settings.general.custom_dpi)
-								imgui.Columns(1)
-								imgui.Separator()
-								imgui.Columns(3)
-								imgui.CenterColumnText(u8"Авто Увал [9/10]")
-								imgui.SameLine(nil, 5) imgui.TextDisabled("[?]")
-								if imgui.IsItemHovered() then
-									imgui.SetTooltip(u8"Автоматическое увольнение сотрудников, которые хотят увал ПСЖ\nФункция доступна только если вы 9/10 ранг!")
-								end
-								imgui.NextColumn()
-								if settings.general.auto_uval then
-									imgui.CenterColumnText(u8'Включено')
-								else
-									imgui.CenterColumnText(u8'Отключено')
-								end
-								imgui.NextColumn()
-								if settings.general.auto_uval then
-									if imgui.CenterColumnSmallButton(u8'Отключить##auto_uval') then
-										settings.general.auto_uval = false
-										save_settings()
-									end
-								else
-									if imgui.CenterColumnSmallButton(u8'Включить##auto_uval') then
-										if tonumber(settings.player_info.fraction_rank_number) == 9 or tonumber(settings.player_info.fraction_rank_number) == 10 then 
-											settings.general.auto_uval = true
-											save_settings()
-										else
-											settings.general.auto_uval = false
-											sampAddChatMessage('[Hospital Helper] {ffffff}Эта Функция доступна только лидеру и заместителям!',message_color)
-										end
-									end
-								end
 								imgui.Columns(1)
 								imgui.Separator()
 								imgui.Columns(3)
