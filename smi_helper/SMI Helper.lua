@@ -3,7 +3,7 @@
 script_name("SMI Helper")
 script_description('Cross-platform script helper for Media Center (CNN)')
 script_author("MTG MODS")
-script_version("3.1 Free")
+script_version("3.2 Free")
 
 require('lib.moonloader')
 require ('encoding').default = 'CP1251'
@@ -142,7 +142,6 @@ local default_settings = {
 		{ cmd = 'expel' , description = 'Выгнать игрока из здания' ,  text = 'Вы больше не можете здесь находиться, я выгоняю вас из здрания!&/me схватив человека ведёт к выходу из здания и закрывает за ним дверь&/expel {arg_id} Н.П.Р.' , arg = '{arg_id}' , enable = true , waiting = '1.200' , deleted = false , bind = "{}"},
 	},
 	commands_manage = {
-		{ cmd = 'book' , description = 'Выдача игроку трудовой книги' , text = 'Оказывается у вас нету трудовой книги, но не переживайте!&Сейчас я вам выдам её, вам не нужно никуда ехать, секунду...&/me достаёт из своего кармана новую трудовую книжку и ставит на ней печать {fraction_tag}&/todo Берите*передавая трудовую книгу челоку напротив&/givewbook {arg_id} 100&/n {get_nick({arg_id})}, примите предложение в /offer чтобы получить трудовую книгу!' , arg = '{arg_id}', enable = true, waiting = '1.200', deleted = false , bind = "{}" },
 		{ cmd = 'inv' , description = 'Принятие игрока в фракцию' , text = '/do В кармане формы есть связка с ключами от раздевалки.&/me достаёт из кармана один ключ из связки ключей от раздевалки&/todo Возьмите, это ключ от нашей раздевалки*передавая ключ человеку напротив&/invite {arg_id}&/r {get_ru_nick({arg_id})} - наш новый сотрудник!' , arg = '{arg_id}', enable = true, waiting = '1.200' , deleted = false , bind = "{}" },
 		{ cmd = 'rp' , description = 'Выдача сотруднику /fractionrp' , text = '/fractionrp {arg_id}' , arg = '{arg_id}', enable = true, waiting = '1.200', deleted = false, bind = "{}"  },
 		{ cmd = 'gr' , description = 'Повышение/понижение cотрудника' , text = '{show_rank_menu}&/me достаёт из кармана свой телефон и заходит в базу данных {fraction_tag}&/me изменяет информацию о сотруднике {get_ru_nick({arg_id})} в базе данных {fraction_tag}&/me выходит с базы данных и убирает телефон обратно в карман&/giverank {arg_id} {get_rank}&/r Сотрудник {get_ru_nick({arg_id})} получил новую должность!' , arg = '{arg_id}', enable = true, waiting = '1.200' , deleted = false, bind = "{}" },
@@ -535,8 +534,6 @@ local auto_uval_checker = false
 local ad_repeat_count = 0
 local last_ad_text = ""
 
-local lovlya_ads_from_player = 'DISABLED'
-
 ------------------------------------------- Main -----------------------------------------------------
 
 function main()
@@ -555,23 +552,9 @@ function main()
 		check_stats = true
 		sampSendChat('/stats')
 	end
-	
-	--EditWindow[0] = true
 
 	while true do
 		wait(0)
-
-		if MembersWindow[0] and not update_members_check then -- обновление мемберса в менюшке
-			update_members_check = true
-			wait(2500)
-			if MembersWindow[0] then
-				members_new = {} 
-				members_check = true 
-				sampSendChat("/members") 
-			end
-			wait(2500)
-			update_members_check = false
-		end
 		
 		if ((os.date("%M", os.time()) == "55" and os.date("%S", os.time()) == "00") or (os.date("%M", os.time()) == "25" and os.date("%S", os.time()) == "00")) then
 			if sampGetPlayerColor(tagReplacements.my_id()) == 368966908 then
@@ -1141,7 +1124,7 @@ end
 function sampev.onServerMessage(color,text)
 	--sampAddChatMessage('color = ' .. color .. ' , text = '..text,-1)
 	if (settings.general.auto_uval and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1165,7 +1148,7 @@ function sampev.onServerMessage(color,text)
 					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1208,17 +1191,7 @@ function sampev.onServerMessage(color,text)
 			end)
 		end
 	end
-	if (text:find("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook") and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		local nick = text:match("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook")
-		local cmd = '/givewbook'
-		for _, command in ipairs(settings.commands_manage) do
-			if command.enable and command.text:find('/givewbook {arg_id}') then
-				cmd =  '/' .. command.cmd
-			end
-		end
-		sampAddChatMessage('[SMI Helper] {ffffff}У игрока ' .. nick .. ' нету трудовой книжки, выдайте её используя ' .. message_color_hex .. cmd .. ' ' .. sampGetPlayerIdByNickname(nick), message_color)
-		return false
-	end
+
 	if text:find("1%.{6495ED} 111 %- {FFFFFF}Проверить баланс телефона") or
 		text:find("2%.{6495ED} 060 %- {FFFFFF}Служба точного времени") or
 		text:find("3%.{6495ED} 911 %- {FFFFFF}Полицейский участок") or
@@ -1281,10 +1254,6 @@ function sampev.onServerMessage(color,text)
 			sampAddChatMessage('[SMI Helper]{ffffff} Поступило новое обьявление от руководства СТК, а именно игрок ' .. message_color_hex .. nick, message_color)
 		else
 			sampAddChatMessage('[SMI Helper]{ffffff} оступило новое обьявление от руководства СТК, а именно игрок ' .. message_color_hex .. nick .. '[' .. sampGetPlayerIdByNickname(nick) .. ']', message_color)
-		end
-		if not EditWindow[0] and settings.general.auto_lovlya_ads then
-			lovlya_ads_from_player = nick
-			sampSendChat('/newsredak')
 		end
 		return false
 	end

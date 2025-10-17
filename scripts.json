@@ -27,17 +27,8 @@
         "info": "Хелпер для сотрудников МЗ (Больницы) (/hh)"
     },
     {
-        "name": "AS Helper",
-        "ver": "4.1 Free",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/as_helper/AS%20Helper.lua",
-        "img": "https://cdn.discordapp.com/attachments/1119664359891800186/1273035686450171974/image.png?ex=67483c9f&is=6746eb1f&hm=9fa1b544a3bb1584adcc40592070403784c922fc91556149c5ecb80eb4a8eb40&",
-        "platform": "PC + MOBILE",
-        "info": "Хелпер для сотрудников ГЦЛ/Автошколы (/sh)"
-    },
-    {
         "name": "SMI Helper",
-        "ver": "3.1 Free",
+        "ver": "3.2 Free",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/smi_helper/SMI%20Helper.lua",
         "img": "https://cdn.discordapp.com/attachments/1119664359891800186/1281920647622037514/image.png?ex=674842a3&is=6746f123&hm=a42dcb87f5fb767acfde353095de6fd8d7264b08f9d7bb32f3898c69cf4376ec&",
@@ -52,6 +43,15 @@
         "img": "",
         "platform": "PC + MOBILE",
         "info": "Хелпер для сотрудников Пожарного Депортамента (/fh)"
+    },
+    {
+        "name": "AS Helper",
+        "ver": "4.1 Free",
+        "author": "MTG MODS",
+        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/as_helper/AS%20Helper.lua",
+        "img": "https://cdn.discordapp.com/attachments/1119664359891800186/1273035686450171974/image.png?ex=67483c9f&is=6746eb1f&hm=9fa1b544a3bb1584adcc40592070403784c922fc91556149c5ecb80eb4a8eb40&",
+        "platform": "PC + MOBILE",
+        "info": "Хелпер для сотрудников ГЦЛ/Автошколы (/sh)"
     },
     {
         "name": "Government Helper",
