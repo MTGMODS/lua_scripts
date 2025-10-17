@@ -9,6 +9,15 @@
         "info": "Универсальный хелпер для аризоны (/helper) | Замена старых хелперов"
     },
     {
+        "name": "AS Helper",
+        "ver": "4.2 Free",
+        "author": "MTG MODS",
+        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/as_helper/AS%20Helper.lua",
+        "img": "https://cdn.discordapp.com/attachments/1119664359891800186/1273035686450171974/image.png?ex=67483c9f&is=6746eb1f&hm=9fa1b544a3bb1584adcc40592070403784c922fc91556149c5ecb80eb4a8eb40&",
+        "platform": "PC + MOBILE",
+        "info": "Хелпер для сотрудников ГЦЛ/Автошколы (/sh)"
+    },
+    {
         "name": "Justice Helper",
         "ver": "2.3 Free",
         "author": "MTG MODS",
@@ -43,15 +52,6 @@
         "img": "",
         "platform": "PC + MOBILE",
         "info": "Хелпер для сотрудников Пожарного Депортамента (/fh)"
-    },
-    {
-        "name": "AS Helper",
-        "ver": "4.1 Free",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/as_helper/AS%20Helper.lua",
-        "img": "https://cdn.discordapp.com/attachments/1119664359891800186/1273035686450171974/image.png?ex=67483c9f&is=6746eb1f&hm=9fa1b544a3bb1584adcc40592070403784c922fc91556149c5ecb80eb4a8eb40&",
-        "platform": "PC + MOBILE",
-        "info": "Хелпер для сотрудников ГЦЛ/Автошколы (/sh)"
     },
     {
         "name": "Government Helper",

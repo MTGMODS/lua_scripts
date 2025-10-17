@@ -3,7 +3,7 @@
 script_name("AS Helper")
 script_description('Cross-platform script helper for AutoSchool')
 script_author("MTG MODS")
-script_version("4.1 Free")
+script_version("4.2 Free")
 
 require('lib.moonloader')
 require ('encoding').default = 'CP1251'
@@ -176,7 +176,6 @@ local default_settings = {
 		{ cmd = 'exp' , description = 'Выгнать игрока из ЦЛ' ,  text = 'Вы больше не можете здесь находиться, я выгоняю вас из ЦЛ!&/me схватив человека ведёт к выходу из ЦЛ и закрывает за ним дверь&/expel {arg_id} Н.П.Ц.Л.' , arg = '{arg_id}' , enable = true , waiting = '1.500' , bind = "{}" },
 	},
 	commands_manage = {
-		{ cmd = 'book' , description = 'Выдача игроку трудовой книги' , text = 'Оказывается у вас нету трудовой книги, но не переживайте!&Сейчас я вам выдам её, вам не нужно никуда ехать, секунду...&/me достаёт из своего кармана новую трудовую книжку и ставит на ней печать {fraction_tag}&/todo Берите*передавая трудовую книгу челоку напротив&/givewbook {arg_id} 100&/n {get_nick({arg_id})}, примите предложение в /offer чтобы получить трудовую книгу!' , arg = '{arg_id}', enable = true, waiting = '1.500', bind = "{}"  },
 		{ cmd = 'inv' , description = 'Принятие игрока в фракцию' , text = '/do В кармане жилетки есть связка с ключами от раздевалки.&/me достаёт из жилетки один ключ из связки ключей от раздевалки&/todo Возьмите, это ключ от нашей раздевалки*передавая ключ человеку напротив&/invite {arg_id}&/n {get_ru_nick({arg_id})} , примите предложение в /offer чтобы получить инвайт!' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}"  },
 		{ cmd = 'rp' , description = 'Выдача сотруднику /fractionrp' , text = '/fractionrp {arg_id}' , arg = '{arg_id}', enable = true, waiting = '1.500', bind = "{}"  },
 		{ cmd = 'pl' , description = 'Назначить взвод сотруднику' , text = '{give_platoon}' , arg = '{arg_id}', enable = true, waiting = '1.500' , bind = "{}" },	
@@ -1340,7 +1339,7 @@ function sampev.onServerMessage(color,text)
 		return false
 	end
 	if (settings.general.auto_uval and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		if text:find("%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
+		if text:find("^%[(.-)%] (.-) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /f /fb или /r /rb без тэга 
 			local tag, rank, name, playerID, message = string.match(text, "%[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1363,7 +1362,7 @@ function sampev.onServerMessage(color,text)
 					sampSendChat('/fmute ' .. PlayerID .. ' 1 [AutoUval] Ожидайте')
 				end
 			end)
-		elseif text:find("%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
+		elseif text:find("^%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)") and color == 766526463 then -- /r или /f с тэгом
 			local tag, tag2, rank, name, playerID, message = string.match(text, "%[(.-)%] %[(.-)%] (.+) (.-)%[(.-)%]: (.+)")
 			lua_thread.create(function ()
 				wait(50)
@@ -1387,7 +1386,6 @@ function sampev.onServerMessage(color,text)
 				end
 			end)
 		end
-		
 		if text:find("(.+) заглушил%(а%) игрока (.+) на 1 минут. Причина: %[AutoUval%] Ожидайте") and auto_uval_checker then
 			local text2 = text:gsub('{......}', '')
 			local DATA, PlayerName, Time, Reason = text2:match("(.+) заглушил%(а%) игрока (.+) на 1 минут. Причина: (.+)")
@@ -1405,41 +1403,6 @@ function sampev.onServerMessage(color,text)
 					auto_uval_checker = false
 				end
 			end)
-		end
-	end
-	if (text:find("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook") and tonumber(settings.player_info.fraction_rank_number) >= 9) then
-		local nick = text:match("У (.+) отсутствует трудовая книжка. Вы можете выдать ему книжку с помощью команды /givewbook")
-		local cmd = '/givewbook'
-		for _, command in ipairs(settings.commands_manage) do
-			if command.enable and command.text:find('/givewbook {arg_id}') then
-				cmd =  '/' .. command.cmd
-			end
-		end
-		sampAddChatMessage('[AS Helper] {ffffff}У игрока ' .. nick .. ' нету трудовой книжки, выдайте её используя ' .. message_color_hex .. cmd .. ' ' .. sampGetPlayerIdByNickname(nick), message_color)
-		return false
-	end
-	if (settings.general.heal_in_chat and not heal_in_chat and not isActiveCommand) then	
-		if (text:find('(.+)%[(%d+)%] говорит:{B7AFAF} (.+)')) then
-			local nick, id, message = text:match('(.+)%[(%d+)%] говорит:{B7AFAF} (.+)')
-			if (nick and id and message and tonumber(id) ~= select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))) then
-				for pon, keyword in ipairs(world_heal_in_chat) do
-					if (message:rupper():find(keyword:rupper())) then
-						fast_heal_in_chat(id)
-						break
-					end
-				end
-			end
-		end
-		if (text:find('(.+)%[(%d+)%] кричит: (.+)')) then
-			local nick, id, message = text:match('(.+)%[(%d+)%] кричит: (.+)')
-			if (nick and id and message and tonumber(id) ~= select(2, sampGetPlayerIdByCharHandle(PLAYER_PED))) then
-				for pon, keyword in ipairs(world_heal_in_chat) do
-					if (message:rupper():find(keyword:rupper())) then
-						fast_heal_in_chat(id)
-						break
-					end
-				end
-			end
 		end
 	end
 	if text:find("1%.{6495ED} 111 %- {FFFFFF}Проверить баланс телефона") or
