@@ -1,5 +1,5 @@
 {
-  "current_version": "BETA 11",
+  "current_version": "BETA 11 (FIX 1)",
   "update_url": "https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/Arizona%20Helper.lua",
-  "update_info": "Переход на новое глобальное обновление - универсальный Arizona Helper"
+  "update_info": "- Переход на новое поколоение - универсальный Arizona Helper\n- Обьеденяет все мои старые хелперы (Justice, Hospital и т.д) в один универсальный\n\n- Обновляться сейчас не обязательно, это бета тест!"
 }
