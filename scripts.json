@@ -1,12 +1,12 @@
 [
     {
-        "name": "Arizona&Rodina Helper",
-        "ver": "BETA 11.6",
+        "name": "Arizona Helper",
+        "ver": "BETA 12.9",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/Arizona%20Helper.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1261913114337873961/IMG_20240714_081151.jpg?ex=6748a46b&is=674752eb&hm=3264a1f936434a74e640f323458712cc823153b6ab95ca1d28b0332b02470472&",
         "platform": "PC + MOBILE",
-        "info": "Универсальный /helper для ЛЮБОЙ ФРАКЦИИ | NEW"
+        "info": "Новый универсальный /helper для ЛЮБОЙ ФРАКЦИИ"
     },
     {
         "name": "AS Helper",
