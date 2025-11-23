@@ -4343,5 +4343,80 @@
         "model_id": 15198,
         "name": "Polaris Slingshot",
         "server_id": 1268
+    },
+    {
+        "model_id": 15517,
+        "name": "Saleen S7",
+        "server_id": 1269
+    },
+    {
+        "model_id": 15234,
+        "name": "Halloween Truck",
+        "server_id": 1270
+    },
+    {
+        "model_id": 15235,
+        "name": "Felreaver Motorcycle",
+        "server_id": 1271
+    },
+    {
+        "model_id": 15236,
+        "name": "Ferrari F80",
+        "server_id": 1272
+    },
+    {
+        "model_id": 15237,
+        "name": "Scrapfang",
+        "server_id": 1273
+    },
+    {
+        "model_id": 15238,
+        "name": "Rustwalker 3000",
+        "server_id": 1274
+    },
+    {
+        "model_id": 15239,
+        "name": "Advan Lambo",
+        "server_id": 1275
+    },
+    {
+        "model_id": 15240,
+        "name": "Lamborghini Sian - Advan",
+        "server_id": 1276
+    },
+    {
+        "model_id": 15241,
+        "name": "Кибербуханка",
+        "server_id": 1277
+    },
+    {
+        "model_id": 15242,
+        "name": "Fantasy Chopper",
+        "server_id": 1278
+    },
+    {
+        "model_id": 15243,
+        "name": "Fantasy Helicopter",
+        "server_id": 1279
+    },
+    {
+        "model_id": 15244,
+        "name": "Goblin Hotrod",
+        "server_id": 1280
+    },
+    {
+        "model_id": 15245,
+        "name": "Xiaomi SU7 Max",
+        "server_id": 1281
+    },
+    {
+        "model_id": 15822,
+        "name": "Трон-байк",
+        "server_id": 1282
+    },
+    {
+        "model_id": 15829,
+        "name": "Warlords Deathwheel",
+        "server_id": 1283
     }
 ]
