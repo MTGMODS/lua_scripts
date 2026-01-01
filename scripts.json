@@ -6,7 +6,7 @@
         "link": "https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/Arizona%20Helper.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1261913114337873961/IMG_20240714_081151.jpg?ex=6748a46b&is=674752eb&hm=3264a1f936434a74e640f323458712cc823153b6ab95ca1d28b0332b02470472&",
         "platform": "PC + MOBILE",
-        "info": "Новый универсальный (все в 1) /helper для ЛЮБОЙ ОРГИ"
+        "info": "Универсальный /helper для ЛЮБОЙ ОРГИ (все в 1)"
     },
     {
         "name": "FD Helper",
@@ -15,7 +15,7 @@
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/fd_helper/FD%20Helper.lua",
         "img": "",
         "platform": "PC + MOBILE",
-        "info": "Старый хелпер для сотрудников Пожарного Депортамента (/fh)"
+        "info": "Старый хелпер для пожарной части (/fh)"
     },
     {
         "name": "AutoDoor",
@@ -104,7 +104,7 @@
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/scoreboard/Mimgui%20ScoreBoard.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226260796997374074/image.png?ex=6748239c&is=6746d21c&hm=3871b70636dd18fc6fef66b4700991943bb14fbb90523dbb8b59814dfbeadb88&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
+        "platform": "PC",
         "info": "Скрипт заменяет самповский ScoreBoard (/tab)"
     },
     {
@@ -114,7 +114,7 @@
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/rp-weapons/WeaponsRP.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1299429817061474396/image.png?ex=6748ad52&is=67475bd2&hm=4c244c4094706986d9c2ecd8b9b22ceb837ca46290c34c16ac6be77be03ad9f3&=&format=webp&quality=lossless",
         "platform": "PC + MOBILE",
-        "info": "Добавляет RP отыгровки оружия (есть в хелперах)"
+        "info": "Добавляет RP отыгровки оружия (ЕСТЬ В ХЕЛПЕРЕ)"
     },
     {
         "name": "RestartPowerOff",
@@ -141,7 +141,7 @@
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/off_uninvite/Offline%20Uninvite.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
         "platform": "PC + MOBILE",
-        "info": "Чистка неактива фракции (/fcleaner)"
+        "info": "Чистка неактива фракции (/fcleaner) для 9/10"
     },
     {
         "name": "Travka",
@@ -150,7 +150,7 @@
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/radius_travki/RadiusTravki.lua",
         "img": "",
         "platform": "PC + MOBILE",
-        "info": "Помощник сбора Счастливой Травки /"
+        "info": "Помощник сбора Счастливой Травки /travka"
     },
     {
         "name": "AutoSell Fish Items",
