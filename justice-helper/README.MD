@@ -1,1 +1,0 @@
-This is a Lua script helper for Arizona RP players who work in the Ministry of Justice (PD and FBI) and the Ministry of Defense (Army)
