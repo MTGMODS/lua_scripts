@@ -2661,7 +2661,7 @@
     },
     {
         "model_id": 16897,
-        "name": "Mercedes-AMG G63: Mansory",
+        "name": "Mercedes-AMG G63:Mansory",
         "server_id": 932
     },
     {
@@ -3431,7 +3431,7 @@
     },
     {
         "model_id": 15452,
-        "name": "BMW NINE ",
+        "name": "BMW NINE",
         "server_id": 1086
     },
     {
@@ -3596,7 +3596,7 @@
     },
     {
         "model_id": 16861,
-        "name": "QuinJet ",
+        "name": "QuinJet",
         "server_id": 1119
     },
     {
@@ -3986,7 +3986,7 @@
     },
     {
         "model_id": 12355,
-        "name": "Chery Tiggo 7 Pro Max ",
+        "name": "Chery Tiggo 7 Pro Max",
         "server_id": 1197
     },
     {
@@ -4206,7 +4206,7 @@
     },
     {
         "model_id": 12444,
-        "name": "FBI Corvette C8 ",
+        "name": "FBI Corvette C8",
         "server_id": 1241
     },
     {
@@ -4418,5 +4418,115 @@
         "model_id": 15829,
         "name": "Warlords Deathwheel",
         "server_id": 1283
+    },
+    {
+        "model_id": 12684,
+        "name": "Безумная Газель",
+        "server_id": 1284
+    },
+    {
+        "model_id": 12685,
+        "name": "Death Limozeen",
+        "server_id": 1285
+    },
+    {
+        "model_id": 12686,
+        "name": "Deadline Express",
+        "server_id": 1286
+    },
+    {
+        "model_id": 12687,
+        "name": "Gigahorse Mad Max",
+        "server_id": 1287
+    },
+    {
+        "model_id": 12767,
+        "name": "Такси Франкенштейна",
+        "server_id": 1288
+    },
+    {
+        "model_id": 12768,
+        "name": "Такси Оборотня",
+        "server_id": 1289
+    },
+    {
+        "model_id": 12769,
+        "name": "NecroVan Turbo",
+        "server_id": 1290
+    },
+    {
+        "model_id": 15679,
+        "name": "BMW i8 Глента",
+        "server_id": 1291
+    },
+    {
+        "model_id": 14968,
+        "name": "Shorty",
+        "server_id": 1292
+    },
+    {
+        "model_id": 15807,
+        "name": "Сани",
+        "server_id": 1293
+    },
+    {
+        "model_id": 14111,
+        "name": "BMW Волшебника 2026",
+        "server_id": 1294
+    },
+    {
+        "model_id": 15765,
+        "name": "ЧубВоз 26",
+        "server_id": 1295
+    },
+    {
+        "model_id": 14923,
+        "name": "Фура Зверя Tier 1",
+        "server_id": 1296
+    },
+    {
+        "model_id": 14943,
+        "name": "Фура Зверя Tier 2",
+        "server_id": 1297
+    },
+    {
+        "model_id": 14942,
+        "name": "Прицеп Фура Зверя Tier 1",
+        "server_id": 1298
+    },
+    {
+        "model_id": 14944,
+        "name": "Прицеп Фура Зверя Tier 2",
+        "server_id": 1299
+    },
+    {
+        "model_id": 14921,
+        "name": "Дирижабль Магната Tier 1",
+        "server_id": 1300
+    },
+    {
+        "model_id": 14922,
+        "name": "Дирижабль Магната Tier 2",
+        "server_id": 1301
+    },
+    {
+        "model_id": 14118,
+        "name": "Inivisible Snowboard",
+        "server_id": 1302
+    },
+    {
+        "model_id": 24051,
+        "name": "Фура Зверя Tier 3",
+        "server_id": 1303
+    },
+    {
+        "model_id": 24052,
+        "name": "Прицеп Фура Зверя Tier 3",
+        "server_id": 1304
+    },
+    {
+        "model_id": 24053,
+        "name": "Дирижабль Магната Tier 3",
+        "server_id": 1305
     }
 ]
