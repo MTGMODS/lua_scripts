@@ -18,15 +18,6 @@
         "info": "Авто-открытие дверей, шлагбаумов, кпп и т.д."
     },
     {
-        "name": "Binder",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/binder/Binder.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1234242830294188103/image.png?ex=67482c75&is=6746daf5&hm=7354fbb13de8c60ad6ece57671c9eb02129f12245768756bbd2ffc463f28da78&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
-        "info": "Удобная замена аризоновского /binder"
-    },
-    {
         "name": "Buttons",
         "ver": "1.0",
         "author": "MTG MODS",
@@ -99,24 +90,6 @@
         "info": "Скрипт заменяет самповский ScoreBoard (/tab)"
     },
     {
-        "name": "RP Weapons",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/rp-weapons/WeaponsRP.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1299429817061474396/image.png?ex=6748ad52&is=67475bd2&hm=4c244c4094706986d9c2ecd8b9b22ceb837ca46290c34c16ac6be77be03ad9f3&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
-        "info": "Добавляет RP отыгровки оружия (ЕСТЬ В ХЕЛПЕРЕ)"
-    },
-    {
-        "name": "RestartPowerOff",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/restart_off/RestartPowerOff.lua",
-        "img": "",
-        "platform": "PC",
-        "info": "Выключает ваш ПК после рестарта на АРЗ"
-    },
-    {
         "name": "Time & Weather",
         "ver": "1.0",
         "author": "MTG MODS",
@@ -126,22 +99,13 @@
         "info": "Смена времени и погоды (/shelp)"
     },
     {
-        "name": "Offline Uninviter",
-        "ver": "2.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/off_uninvite/Offline%20Uninvite.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
-        "platform": "PC + MOBILE",
-        "info": "Чистка неактива фракции (/fcleaner) для 9/10"
-    },
-    {
         "name": "Travka",
         "ver": "1.0",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/radius_travki/RadiusTravki.lua",
         "img": "",
         "platform": "PC + MOBILE",
-        "info": "Помощник сбора Счастливой Травки /travka"
+        "info": "Помощник сбора Счастливой Травки (/travka)"
     },
     {
         "name": "AutoSell Fish Items",
@@ -151,14 +115,5 @@
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
         "platform": "PC + MOBILE",
         "info": "Автопродажа рыбы и редких вещей"
-    },
-    {
-        "name": "MyAccent",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/accent/MyAccent.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1119673213874606190/image.png?ex=6748a1f0&is=67475070&hm=cbe3dbb7eb1c90e07676346b3806f7ca5b9fd65ac172571ce9252f10cd5510d7&=&format=webp&quality=lossless",
-        "platform": "PC",
-        "info": "Настройка акцента в чате (/acc)"
     }
 ]
