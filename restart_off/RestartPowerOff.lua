@@ -1,6 +1,5 @@
-script_name("{7ef3fa}RestartPowerOff")
-script_author("{7ef3fa}MTG MODS")
-script_version("1.0.0")
+script_name("RestartPowerOff")
+script_author("MTG MODS")
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 require "lib.moonloader"
 local sampev = require "samp.events"
@@ -28,8 +27,8 @@ function sampev.onServerMessage(color,text)
 	if color == -1104335361 and text:find("Технический рестарт через 02 минут. Советуем завершить текущую сессию") or text:find("Технический рестарт через 01 минут. Сессия будет завершена принудительно") then
 		sampAddChatMessage('{ff0000}[INFO] {ffffff}После тех. рестарта сервера ваш ПК/ноутбук будет выключен! Отменить выклюние: {00ccff}/cancel_off',-1)
 	end
-	
-	if color == -1104335361 and text:find("Технический рестарт! Сессия завершена принудительно") then
+	                                       
+	if text:find("^Технический рестарт сервера! Сессия завершена принудительно.") then
 		os.execute('shutdown /s /t 0')
 	end
 	
