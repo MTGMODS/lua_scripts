@@ -18,15 +18,6 @@
         "info": "Авто-открытие дверей, шлагбаумов, кпп и т.д."
     },
     {
-        "name": "Buttons",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/buttons/Buttons.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1247947013883039796/image.png?ex=67489739&is=674745b9&hm=efe3c69c3a4e4a07858bb4e2f30816649924726af821938a370aece92af74237&=&format=webp&quality=lossless",
-        "platform": "MOBILE",
-        "info": "Добавляет 2 наэкранных кнопки - Нарко и Армор"
-    },
-    {
         "name": "CamHack",
         "ver": "5",
         "author": "MTG MODS",
@@ -46,7 +37,7 @@
     },
     {
         "name": "CarSnakeFix",
-        "ver": "1.0",
+        "ver": "1",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/car_snake_fix/CarSnakeFix.lua",
         "img": "",
@@ -73,7 +64,7 @@
     },
     {
         "name": "KazBar",
-        "ver": "1.0",
+        "ver": "1",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/kazbar/KazBar.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1281897704389349416/image.png?ex=67482d45&is=6746dbc5&hm=7255fa17174a51f6ca4a061ddf6644db7f2d514bb8409f985d28504f804fe3f7&=&format=webp&quality=lossless",
@@ -91,7 +82,7 @@
     },
     {
         "name": "Time & Weather",
-        "ver": "1.0",
+        "ver": "1",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/time_weather/Time%20&%20Weather.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
@@ -99,17 +90,8 @@
         "info": "Смена времени и погоды (/shelp)"
     },
     {
-        "name": "Travka",
-        "ver": "1.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/radius_travki/RadiusTravki.lua",
-        "img": "",
-        "platform": "PC + MOBILE",
-        "info": "Помощник сбора Счастливой Травки (/travka)"
-    },
-    {
         "name": "AutoSell Fish Items",
-        "ver": "1.0",
+        "ver": "1",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/asell_fish/AutoSell%20Fish%20&%20Items.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
