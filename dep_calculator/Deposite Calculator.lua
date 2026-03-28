@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global, lowercase-global
+
 script_name("Deposite Calсulator")
 script_author("MTG MODS")
 script_version(5)
@@ -19,6 +21,8 @@ local settings = inicfg.load({
 		my_insurance = 0,
 		my_lavka = 0,
 		my_gramota = 0,
+		my_skin_tron = 0,
+		my_ring_tron = 0,
 		fix = "nil" --5.791
     }
 }, my_ini)
@@ -28,6 +32,8 @@ local def_bonus = { -- на случай если гитхаб недоступен, чтоб скрипт не умер
 	insurance = 15,
 	lavka = 12,
 	gramota_veterana = 7,
+	skin_tron = 12,
+	ring_tron = 8,
 	vip_profit = {
 		1500, -- no vip
 		1150, -- titan vip
@@ -71,6 +77,8 @@ local my_houses = new.int(settings.general.my_houses)
 local my_vip = new.int(settings.general.my_vip)
 local my_dep_lvl = new.int(settings.general.my_dep_lvl)
 local my_rank = new.int(settings.general.my_rank)
+local my_skin_tron = new.int(settings.general.my_skin_tron)
+local my_ring_tron = new.int(settings.general.my_ring_tron)
 local input_fix = new.char[256](u8(settings.general.fix))
 
 local sizeX, sizeY = getScreenResolution()
@@ -102,18 +110,17 @@ function main()
 		end
 	end)
 
-	download_dep_bonuse_info()
-	
-	-- wait(-1)
+	-- download_dep_bonuse_info()
+	bonus = def_bonus
 	
 end	
 
 require("samp.events").onShowDialog = function(dialogid, style, title, button1, button2, text)
 	if check_stats and title:find("Основная статистика") then
 		if text:find("{FFFFFF}Деньги на депозите: {B83434}%[(.+)%](.+){FFFFFF}Работа") then
-			local deposite = text:match("{FFFFFF}Деньги на депозите: {B83434}%[(.+)%](.+){FFFFFF}Работа")
-			settings.general.my_deposite = deposite:gsub("%D", "")
-			settings.general.my_deposite = math.floor(settings.general.my_deposite)
+			local deposite_text = text:match("{FFFFFF}Деньги на депозите: {B83434}%[(.+)%](.+){FFFFFF}Работа")
+			local deposite = deposite_text:gsub("%D", "")
+			settings.general.my_deposite = tonumber(deposite)
 			inicfg.save(settings, my_ini)
 		end
 		if text:find("{FFFFFF}Должность: {B83434}(.+)%((%d+)%)") then
@@ -128,14 +135,6 @@ require("samp.events").onShowDialog = function(dialogid, style, title, button1, 
 				my_vip[0] = 2
 			elseif vip == 'Titan' then
 				my_vip[0] = 1
-			-- elseif vip == 'Daimond' then
-			-- 	my_vip[0] = 4
-			-- elseif vip == 'Platinum' then
-			-- 	my_vip[0] = 3
-			-- elseif vip == 'Gold' then
-			-- 	my_vip[0] = 2
-			-- elseif vip == 'Bronze' then
-			-- 	my_vip[0] = 1
 			elseif vip == 'Не имеется' then
 				my_vip[0] = 0
 			end
@@ -149,61 +148,18 @@ require("samp.events").onShowDialog = function(dialogid, style, title, button1, 
 end
 
 function getMyDeposite()
-	local deposit
-	if newdeposite_bool then
-		deposit = newdeposite
-	else
-		local matchResult = tostring(settings.general.my_deposite):match("(%d+)")
-		deposit = matchResult and tonumber(matchResult) or 0
-	end
-	return tonumber(deposit)
+	return newdeposite_bool and tonumber(newdeposite) or settings.general.my_deposite or 0
 end
 function getMaxDepositeBonusLVL()
-
-	return bonus.dep_lvl_max_dep[settings.general.my_dep_lvl+1]
-
-	-- if settings.general.my_dep_lvl == 0 then
-	-- 	return 0
-	-- elseif settings.general.my_dep_lvl == 1 then
-	-- 	return 20000000
-	-- elseif settings.general.my_dep_lvl == 2 then
-	-- 	return 30000000
-	-- elseif settings.general.my_dep_lvl == 3 then
-	-- 	return 50000000
-	-- elseif settings.general.my_dep_lvl == 4 then
-	-- 	return 70000000
-	-- elseif settings.general.my_dep_lvl == 5 then
-	-- 	return 100000000
-	-- end
+	return bonus.dep_lvl_max_dep[settings.general.my_dep_lvl + 1]
 end
 function getMaxDeposite()
-	local max_deposite = 200000000 + (bonus.house_max_deposite * settings.general.my_houses) + getMaxDepositeBonusLVL()
-	return tonumber(max_deposite)
+	return 200000000 + (bonus.house_max_deposite * settings.general.my_houses) + getMaxDepositeBonusLVL()
 end
 function getVipProfit()
-	
-	return bonus.vip_profit[tonumber(my_vip[0])+1]
-
-	-- local vip_bonus
-    -- if my_vip[0] == 0 then -- no vip
-	-- 	vip_bonus = 1500
-    -- -- elseif my_vip[0] == 1 then -- bronze vip
-	-- -- 	vip_bonus = 1400
-    -- -- elseif my_vip[0] == 2  then -- gold vip
-	-- -- 	vip_bonus = 1300
-    -- -- elseif my_vip[0] == 3 then -- platinum vip
-	-- -- 	vip_bonus = 1250
-    -- -- elseif my_vip[0] == 4 then -- daimond vip
-	-- -- 	vip_bonus = 1200
-    -- elseif my_vip[0] == 1 then -- titan vip
-	-- 	vip_bonus = 1150
-    -- elseif my_vip[0] == 2 then -- premium vip
-	-- 	vip_bonus = 800
-    -- end
-	-- return vip_bonus
+	return bonus.vip_profit[my_vip[0] + 1]
 end
 function getPercentBonus()
-
 	local percent = 0
 
 	if my_insurance[0] == 1 then
@@ -227,183 +183,192 @@ function getPercentBonus()
 	end
 
 	if my_dep_lvl[0] ~= 0 then
-		percent = percent + bonus.dep_lvl_bonus[tonumber(my_dep_lvl[0])+1]
+		percent = percent + bonus.dep_lvl_bonus[tonumber(my_dep_lvl[0]) + 1]
+	end
+
+	if my_skin_tron[0] == 1 then
+		percent = percent + bonus.skin_tron
+	end
+
+	if my_ring_tron[0] == 1 then
+		percent = percent + bonus.ring_tron
 	end
 	
 	return tonumber(percent)
-
 end
 function getDeposite()
 	local deposite = getMyDeposite()
-	if tonumber(deposite) > getMaxDeposite() then
-		deposite = getMaxDeposite()
+	local max_deposite = getMaxDeposite()
+	if deposite > max_deposite then
+		deposite = max_deposite
 	end
 	local my_deposite = deposite / getVipProfit()
 	local my_deposite_prefinal = my_deposite + (my_deposite / 100) * getPercentBonus()
 	local deposite_fix = 0
-	pcall(function()
+	if settings.general.fix and tonumber(settings.general.fix) then
 		deposite_fix = ( my_deposite_prefinal / 100 ) * tonumber(settings.general.fix)
-	end)
+	end
 	local final_deposite = my_deposite_prefinal - deposite_fix
 	return math.floor(final_deposite/2)
 end
 function gotoFullDeposite()
 	local currentDeposit = getMyDeposite()
-	if currentDeposit >= getMaxDeposite() then
+	local maxDeppsot = getMaxDeposite()
+	if currentDeposit >= maxDeppsot or currentDeposit <= 0 then
 		return 0
 	end
+	local vipProfit = getVipProfit()
+	local percent_bonus = getPercentBonus()
+	local fix_val = (settings.general.fix and tonumber(settings.general.fix)) or 0
 	local iterations = 0
-	while currentDeposit < getMaxDeposite() do
-		local my_deposite = currentDeposit / getVipProfit()
-		local my_deposite_bonus = my_deposite + (my_deposite / 100) * getPercentBonus()
-		local deposite_fix = 0
-		pcall(function()
-			deposite_fix = ( my_deposite_bonusl / 100 ) * tonumber(settings.general.fix)
-		end)
-		local final_deposite = math.floor((my_deposite_bonus - deposite_fix)/2)
+	while currentDeposit < maxDeppsot do
+		local my_deposite = currentDeposit / vipProfit
+		local my_deposite_bonus = my_deposite + (my_deposite / 100) * percent_bonus
+		local deposite_fix = (my_deposite_bonus / 100) * fix_val
+		local final_deposite = math.floor((my_deposite_bonus - deposite_fix) / 2)
+		if final_deposite <= 0 then break end
 		currentDeposit = currentDeposit + final_deposite
 		iterations = iterations + 1
 	end
-
 	return iterations
 end
-function comma_value(n) -- эта функция полностю взята со скрипта MoneySeparator by Royan_Millans and YarikVL
+function comma_value(n) -- by Royan_Millans and YarikVL
 	local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
-	return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+	return (left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right) or n
 end
 
-function download_dep_bonuse_info()
-	print('[Deposite Calculator] Использую стандартные данные про бонусы от депозита!')
-	bonus = def_bonus
+-- function download_dep_bonuse_info()
+-- 	print('[Deposite Calculator] Использую стандартные данные про бонусы от депозита!')
+-- 	bonus = def_bonus
 	
-	print('[Deposite Calculator] Пытаюсь с облака получить инфу про бонусы от депозита...')
+-- 	print('[Deposite Calculator] Пытаюсь с облака получить инфу про бонусы от депозита...')
 
-	local path = getWorkingDirectory():gsub('\\','/') .. "/config/Deposite_Bonuse.json"
-	os.remove(path)
+-- 	local path = getWorkingDirectory():gsub('\\','/') .. "/config/Deposite_Bonuse.json"
+-- 	os.remove(path)
 
-	local url = 'https://raw.githubusercontent.com/MTGMODS/lua_scripts/main/dep_calculator/Deposite_Bonuse.json'
+-- 	local url = 'https://raw.githubusercontent.com/MTGMODS/lua_scripts/main/dep_calculator/Deposite_Bonuse.json'
 
-	if isMonetLoader() then
-		local function downloadToFile(url, path, callback, progressInterval)
-			callback = callback or function() end
-			progressInterval = progressInterval or 0.1
+-- 	if isMonetLoader() then
+-- 		local function downloadToFile(url, path, callback, progressInterval)
+-- 			callback = callback or function() end
+-- 			progressInterval = progressInterval or 0.1
 		
-			local effil = require("effil")
-			local progressChannel = effil.channel(0)
+-- 			local effil = require("effil")
+-- 			local progressChannel = effil.channel(0)
 		
-			local runner = effil.thread(function(url, path)
-			local http = require("socket.http")
-			local ltn = require("ltn12")
+-- 			local runner = effil.thread(function(url, path)
+-- 			local http = require("socket.http")
+-- 			local ltn = require("ltn12")
 		
-			local r, c, h = http.request({
-				method = "HEAD",
-				url = url,
-			})
+-- 			local r, c, h = http.request({
+-- 				method = "HEAD",
+-- 				url = url,
+-- 			})
 		
-			if c ~= 200 then
-				return false, c
-			end
-			local total_size = h["content-length"]
+-- 			if c ~= 200 then
+-- 				return false, c
+-- 			end
+-- 			local total_size = h["content-length"]
 		
-			local f = io.open(path, "wb")
-			if not f then
-				return false, "failed to open file"
-			end
-			local success, res, status_code = pcall(http.request, {
-				method = "GET",
-				url = url,
-				sink = function(chunk, err)
-				local clock = os.clock()
-				if chunk and not lastProgress or (clock - lastProgress) >= progressInterval then
-					progressChannel:push("downloading", f:seek("end"), total_size)
-					lastProgress = os.clock()
-				elseif err then
-					progressChannel:push("error", err)
-				end
+-- 			local f = io.open(path, "wb")
+-- 			if not f then
+-- 				return false, "failed to open file"
+-- 			end
+-- 			local success, res, status_code = pcall(http.request, {
+-- 				method = "GET",
+-- 				url = url,
+-- 				sink = function(chunk, err)
+-- 				local clock = os.clock()
+-- 				if chunk and not lastProgress or (clock - lastProgress) >= progressInterval then
+-- 					progressChannel:push("downloading", f:seek("end"), total_size)
+-- 					lastProgress = os.clock()
+-- 				elseif err then
+-- 					progressChannel:push("error", err)
+-- 				end
 		
-				return ltn.sink.file(f)(chunk, err)
-				end,
-			})
+-- 				return ltn.sink.file(f)(chunk, err)
+-- 				end,
+-- 			})
 		
-			if not success then
-				return false, res
-			end
+-- 			if not success then
+-- 				return false, res
+-- 			end
 		
-			if not res then
-				return false, status_code
-			end
+-- 			if not res then
+-- 				return false, status_code
+-- 			end
 		
-			return true, total_size
-			end)
-			local thread = runner(url, path)
+-- 			return true, total_size
+-- 			end)
+-- 			local thread = runner(url, path)
 		
-			local function checkStatus()
-			local tstatus = thread:status()
-			if tstatus == "failed" or tstatus == "completed" then
-				local result, value = thread:get()
+-- 			local function checkStatus()
+-- 			local tstatus = thread:status()
+-- 			if tstatus == "failed" or tstatus == "completed" then
+-- 				local result, value = thread:get()
 		
-				if result then
-				callback("finished", value)
-				else
-				callback("error", value)
-				end
+-- 				if result then
+-- 				callback("finished", value)
+-- 				else
+-- 				callback("error", value)
+-- 				end
 		
-				return true
-			end
-			end
+-- 				return true
+-- 			end
+-- 			end
 		
-			lua_thread.create(function()
-			if checkStatus() then
-				return
-			end
+-- 			lua_thread.create(function()
+-- 			if checkStatus() then
+-- 				return
+-- 			end
 		
-			while thread:status() == "running" do
-				if progressChannel:size() > 0 then
-				local type, pos, total_size = progressChannel:pop()
-				callback(type, pos, total_size)
-				end
-				wait(0)
-			end
+-- 			while thread:status() == "running" do
+-- 				if progressChannel:size() > 0 then
+-- 				local type, pos, total_size = progressChannel:pop()
+-- 				callback(type, pos, total_size)
+-- 				end
+-- 				wait(0)
+-- 			end
 		
-			checkStatus()
-			end)
-		end
-		downloadToFile(url, path, function(type, pos, total_size)
-			if type == "finished" then
-				local result = readJsonFile(path)
-				if result then
-					bonus = result
-					print('[Deposite Calculator] Информация успешно получена!')
-				end
-			end
-		end)
-	else
-		downloadUrlToFile(url, path, function(id, status)
-			if status == 6 then -- ENDDOWNLOADDATA
-				local result = readJsonFile(path)
-				if result then
-					bonus = result
-					print('[Deposite Calculator] Информация успешно получена!')
-				end
-			end
-		end)
-	end
-	function readJsonFile(filePath)
-		if not doesFileExist(filePath) then
-			print("[Deposite Calculator] Ошибка: Файл " .. filePath .. " не существует")
-			return nil
-		end
-		local file = io.open(filePath, "r")
-		local content = file:read("*a")
-		file:close()
-		local jsonData = decodeJson(content)
-		if not jsonData then
-			print("[Deposite Calculator] Ошибка: Неверный формат JSON в файле " .. filePath)
-			return nil
-		end
-		return jsonData
-	end
-end
+-- 			checkStatus()
+-- 			end)
+-- 		end
+-- 		downloadToFile(url, path, function(type, pos, total_size)
+-- 			if type == "finished" then
+-- 				local result = readJsonFile(path)
+-- 				if result then
+-- 					bonus = result
+-- 					print('[Deposite Calculator] Информация успешно получена!')
+-- 				end
+-- 			end
+-- 		end)
+-- 	else
+-- 		downloadUrlToFile(url, path, function(id, status)
+-- 			if status == 6 then -- ENDDOWNLOADDATA
+-- 				local result = readJsonFile(path)
+-- 				if result then
+-- 					bonus = result
+-- 					print('[Deposite Calculator] Информация успешно получена!')
+-- 				end
+-- 			end
+-- 		end)
+-- 	end
+-- 	function readJsonFile(filePath)
+-- 		if not doesFileExist(filePath) then
+-- 			print("[Deposite Calculator] Ошибка: Файл " .. filePath .. " не существует")
+-- 			return nil
+-- 		end
+-- 		local file = io.open(filePath, "r")
+-- 		local content = file:read("*a")
+-- 		file:close()
+-- 		local jsonData = decodeJson(content)
+-- 		if not jsonData then
+-- 			print("[Deposite Calculator] Ошибка: Неверный формат JSON в файле " .. filePath)
+-- 			return nil
+-- 		end
+-- 		return jsonData
+-- 	end
+-- end
 
 imgui.OnInitialize(function()
 	imgui.GetIO().IniFilename = nil
@@ -413,34 +378,34 @@ end)
 imgui.OnFrame(
     function() return MainWindow[0] end,
     function(main_window)
-	
 		imgui.SetNextWindowPos(imgui.ImVec2(sizeX / 2, sizeY / 2), imgui.Cond.FirstUseEver, imgui.ImVec2(0.5, 0.5))
-		imgui.SetNextWindowSize(imgui.ImVec2(800 * MONET_DPI_SCALE, 510 * MONET_DPI_SCALE), imgui.Cond.FirstUseEver)
+		imgui.SetNextWindowSize(imgui.ImVec2(800 * MONET_DPI_SCALE, 580 * MONET_DPI_SCALE), imgui.Cond.FirstUseEver)
 		imgui.Begin(fa.LANDMARK.." Deposite Calculator by MTG MODS", MainWindow, imgui.WindowFlags.NoCollapse + imgui.WindowFlags.NoResize)
-		
 		if imgui.BeginChild('##1', imgui.ImVec2(790 * MONET_DPI_SCALE, 65 * MONET_DPI_SCALE), true) then
-			
-			imgui.CenterText(fa.MONEY_CHECK_DOLLAR..u8' Денег на вашем депозите: $' .. comma_value(getMyDeposite()) .. ' / $' .. comma_value(getMaxDeposite()) )
-			
-			if getMyDeposite() > getMaxDeposite() then 
-				imgui.CenterTextDisabled(u8"У вас на депозите $" .. comma_value( tonumber(getMyDeposite()) - getMaxDeposite() ) .. u8" лишние, с них прибыль не идёт, и их можно снять")
-			elseif getMyDeposite() > 0 and getMyDeposite() < getMaxDeposite() then
-				imgui.CenterTextDisabled(u8"Чтобы иметь максимальную прибыль с депозита, пополните его ещё на $" .. comma_value( getMaxDeposite() - getMyDeposite() ) .. u8" либо ожидайте " .. gotoFullDeposite() .. " (" .. math.floor(gotoFullDeposite()/4) .. u8" если X4) PAYDAY")
-			elseif getMyDeposite() == getMaxDeposite() then
+			local my_deposite = getMyDeposite()
+			local max_deposite = getMaxDeposite()
+			imgui.CenterText(fa.MONEY_CHECK_DOLLAR..u8' Денег на вашем депозите: $' .. comma_value(my_deposite) .. ' / $' .. comma_value(max_deposite))
+			if my_deposite > max_deposite then 
+				imgui.CenterTextDisabled(u8"У вас на депозите $" .. comma_value(my_deposite - max_deposite) .. u8" лишние, с них прибыль не идёт, и их можно снять")
+				imgui.SameLine()
+				if imgui.SmallButton(fa.COPY .. ' ' .. my_deposite - max_deposite) then
+					setClipboardText(tostring(my_deposite - max_deposite))
+					sampAddChatMessage('{00ccff}[INFO] {ffffff}Лишняя сумма успешно скопирована в буфер обмена!', -1)
+				end
+			elseif my_deposite >= 10000 and my_deposite < max_deposite then
+				local paydays = gotoFullDeposite()
+				imgui.CenterTextDisabled(u8"Чтобы иметь максимальную прибыль с депозита, пополните его ещё на $" .. comma_value(max_deposite - my_deposite) .. u8" либо ожидайте " .. paydays .. " (" .. math.floor(paydays/4) .. u8" если X4) PAYDAY")
+			elseif my_deposite == max_deposite then
 				imgui.CenterTextDisabled(u8"Ваш депозит полностю заполнением, и теперь вы каждый PAYDAY будете иметь прибыль, которую можно снимать")
-			elseif getMyDeposite() == 0 then
-				imgui.CenterTextDisabled(u8"Депозит полностю пустой, и не приносит прибыль!")
+			elseif my_deposite == 0 or my_deposite < 10000 then
+				imgui.CenterTextDisabled(u8"Депозит не приносит прибыль, у вас нету минимальной суммы $10000!")
 			end
-			
 			imgui.CenterTextDisabled(u8"Чтобы указать другое кол-во денег на депозите вместо использования данных из /stats, введите /newdeposite [значение]")
-	
-			
-		imgui.EndChild() end
-		
+			imgui.EndChild()
+		end
 		if imgui.BeginChild('##2', imgui.ImVec2(790 * MONET_DPI_SCALE, 100 * MONET_DPI_SCALE), true) then
-		
 			imgui.CenterText(fa.SACK_DOLLAR..u8' Подсчёт прибыли с депозита учитывая указанные условия:')
-			
+			local deposite = getDeposite()
 			imgui.Separator()
 			imgui.Columns(4)
 			imgui.CenterColumnText(u8'Простой PAYDAY')
@@ -453,26 +418,21 @@ imgui.OnFrame(
 			imgui.Columns(1)
 			imgui.Separator()
 			imgui.Columns(4)
-			imgui.CenterColumnText('$' .. tostring( comma_value( getDeposite() ) ) )
+			imgui.CenterColumnText('$' .. comma_value(deposite))
 			imgui.NextColumn()
-			imgui.CenterColumnText('$' .. tostring( comma_value( getDeposite() * 2 ) ) )
+			imgui.CenterColumnText('$' .. comma_value(deposite * 2))
 			imgui.NextColumn()
-			imgui.CenterColumnText('$' .. tostring( comma_value( getDeposite() * 3 ) ) )
+			imgui.CenterColumnText('$' .. comma_value(deposite * 3))
 			imgui.NextColumn()
-			imgui.CenterColumnText('$' .. tostring( comma_value( getDeposite() * 4 ) ) )
+			imgui.CenterColumnText('$' .. comma_value(deposite * 4))
 			imgui.Columns(1)
 			imgui.Separator()
-
 			imgui.CenterTextDisabled(u8('(реальная прибыль может немного отличаться из-за настроек экономики сервера — определенного фикс-процента от ГА/КА)'))
-		
-		imgui.EndChild() end
-		
-		if imgui.BeginChild('##3', imgui.ImVec2(790 * MONET_DPI_SCALE, 300 * MONET_DPI_SCALE), true) then
-			
+			imgui.EndChild() 
+		end
+		if imgui.BeginChild('##3', imgui.ImVec2(790 * MONET_DPI_SCALE, 370 * MONET_DPI_SCALE), true) then
 			imgui.CenterText(fa.CIRCLE_INFO .. u8' Укажите ваши условия, которые влияют на прибыль с депозита:')
-			
 			imgui.Separator()
-			
 			if imgui.CollapsingHeader(fa.CROWN .. u8' Ваш игровой VIP статус') then
 				local numButtons = 3
 				local buttonWidth = 100 * MONET_DPI_SCALE
@@ -483,7 +443,6 @@ imgui.OnFrame(
 					if i > 0 then
 						imgui.SameLine()
 					end
-
 					local label = ""
 					if i == 0 then
 						label = u8" Без VIP "
@@ -500,7 +459,6 @@ imgui.OnFrame(
 					elseif i == 2 then
 						label = u8" Premium VIP "
 					end
-
 					imgui.SetCursorPosX(startPosX + i * (buttonWidth + imgui.GetStyle().ItemSpacing.x))
 					if imgui.RadioButtonIntPtr(label, my_vip, i) then
 						my_vip[0] = i
@@ -512,9 +470,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Уровень вашего VIP статуса существенно влияет на прибыль с депозита!\nPremium VIP даёт +50 процентов\nTitan VIP даёт +25 процентов')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.PIGGY_BANK .. u8' Ваш уровень прокачиваемого депозита') then
 				local numButtons = 6
 				local buttonWidth = 100 * MONET_DPI_SCALE
@@ -539,9 +495,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Уровень вашего депозита можно прокачивать в банке, каждый лвл (от 1 до 5) повышает прибыль')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.HOUSE .. u8' Количество домов с улучшением депозита (ваших + тех в которые вы заселены)') then
 				for i = 0, 15 do
 					if i > 0 then
@@ -559,9 +513,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Для каждого дома есть улучшение "Депозитные условия"\nДанное улучшение стоит $60,000,000\nУлучшенный дом повышает максимальный депозит на $6,000,000\nВы можете подселиться в такой дом, или купить его у игроков')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.USER .. u8' Ваша порядковая должность в организации (номер ранга)') then
 				local numButtons = 11
 				local buttonWidth = 50 * MONET_DPI_SCALE
@@ -586,9 +538,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'1 - 3 ранг даёт +15 процентов\n4 - 7 ранг даёт +25 процентов\n8 - 10 ранг даёт +30 процентов')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.FILE_INVOICE_DOLLAR .. u8' Наличие у вас улучшения "Пенсионне Страхование"') then
 				local numButtons = 2
 				local buttonWidth = 100 * MONET_DPI_SCALE
@@ -623,9 +573,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Улучшение "Пенсионное Страхование" даёт +15 процентов к депозиту\nОно покупается в Страховой Компании за $200,000,000')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.BOX_ARCHIVE .. u8' Наличие у вас аксесуара "Элитная Лавка" / "Магическая Лавка" / "Рыбацкий Рюкзак"') then
 				local numButtons = 2
 				local buttonWidth = 100 * MONET_DPI_SCALE
@@ -660,9 +608,7 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Данный кксесуар даёт +12 процентов к депозиту')
 			end
-
 			imgui.Separator()
-
 			if imgui.CollapsingHeader(fa.FILE .. u8' Наличие у вас "Грамоты Ветерана"') then
 				imgui.PushItemWidth(50 * MONET_DPI_SCALE)
 				imgui.SetCursorPosX(imgui.GetWindowWidth() / 2 - 25 * MONET_DPI_SCALE)
@@ -699,9 +645,81 @@ imgui.OnFrame(
 			if imgui.IsItemHovered() then
 				imgui.SetTooltip(u8'Грамота даёт +7 процентов к депозиту')
 			end
-
 			imgui.Separator()
-			
+			if imgui.CollapsingHeader(fa.FILE .. u8' Наличие у вас "Скин TRON"') then
+				imgui.PushItemWidth(50 * MONET_DPI_SCALE)
+				imgui.SetCursorPosX(imgui.GetWindowWidth() / 2 - 25 * MONET_DPI_SCALE)
+				local numButtons = 2
+				local buttonWidth = 100 * MONET_DPI_SCALE
+				local totalButtonWidth = buttonWidth * numButtons + imgui.GetStyle().ItemSpacing.x * (numButtons - 1)
+				local startPosX = (imgui.GetWindowWidth() - totalButtonWidth) / 2
+				imgui.SetCursorPosX(startPosX)
+				for i = 0, numButtons - 1 do
+					if i > 0 then
+						imgui.SameLine()
+					end
+					local label
+					if i == 0 then
+						label = u8' Нету ##skin_tron' 
+					elseif i == 1 then
+						label = u8' Есть ##skin_tron'
+					end
+
+					imgui.SetCursorPosX(startPosX + i * (buttonWidth + imgui.GetStyle().ItemSpacing.x))
+					if imgui.RadioButtonIntPtr(label, my_skin_tron, i) then
+						my_skin_tron[0] = i
+						if my_skin_tron[0] == 0 then
+							settings.general.my_skin_tron = false
+							inicfg.save(settings, my_ini)
+						else
+							settings.general.my_skin_tron = true
+							inicfg.save(settings, my_ini)
+						end
+					end
+				end
+				imgui.Separator()
+			end
+			if imgui.IsItemHovered() then
+				imgui.SetTooltip(u8'Скин даёт +12 процентов к депозиту')
+			end
+			imgui.Separator()
+			if imgui.CollapsingHeader(fa.FILE .. u8' Наличие у вас "Кольцо TRON"') then
+				imgui.PushItemWidth(50 * MONET_DPI_SCALE)
+				imgui.SetCursorPosX(imgui.GetWindowWidth() / 2 - 25 * MONET_DPI_SCALE)
+				local numButtons = 2
+				local buttonWidth = 100 * MONET_DPI_SCALE
+				local totalButtonWidth = buttonWidth * numButtons + imgui.GetStyle().ItemSpacing.x * (numButtons - 1)
+				local startPosX = (imgui.GetWindowWidth() - totalButtonWidth) / 2
+				imgui.SetCursorPosX(startPosX)
+				for i = 0, numButtons - 1 do
+					if i > 0 then
+						imgui.SameLine()
+					end
+					local label
+					if i == 0 then
+						label = u8' Нету ##my_ring_tron' 
+					elseif i == 1 then
+						label = u8' Есть ##my_ring_tron'
+					end
+
+					imgui.SetCursorPosX(startPosX + i * (buttonWidth + imgui.GetStyle().ItemSpacing.x))
+					if imgui.RadioButtonIntPtr(label, my_ring_tron, i) then
+						my_ring_tron[0] = i
+						if my_ring_tron[0] == 0 then
+							settings.general.my_ring_tron = false
+							inicfg.save(settings, my_ini)
+						else
+							settings.general.my_ring_tron = true
+							inicfg.save(settings, my_ini)
+						end
+					end
+				end
+				imgui.Separator()
+			end
+			if imgui.IsItemHovered() then
+				imgui.SetTooltip(u8'Акс даёт +8 процентов к депозиту')
+			end
+			imgui.Separator()
 			if imgui.CollapsingHeader(fa.CIRCLE_DOLLAR_TO_SLOT .. u8' Текущий процент фикса экономики (значение от ГА/КА, может быть от -25 до +25)') then
 				imgui.PushItemWidth(50 * MONET_DPI_SCALE)
 				imgui.SetCursorPosX(imgui.GetWindowWidth() / 2 - 25 * MONET_DPI_SCALE)
@@ -711,11 +729,9 @@ imgui.OnFrame(
 				end
 				imgui.Separator()
 			end
-			
-		imgui.EndChild() end
-		
+			imgui.EndChild()
+		end
 		imgui.End()
-		
     end
 )
 function imgui.CenterColumnText(text)
