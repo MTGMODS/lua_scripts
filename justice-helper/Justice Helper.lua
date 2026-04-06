@@ -4475,7 +4475,7 @@ imgui.OnFrame(
 					imgui.SetCursorPosX(105 * settings.general.custom_dpi)
 					if imgui.Button(fa.DOWNLOAD .. u8' Загрузить ##smartuk') then
 						download_smartuk = true
-						downloadFileFromUrlToPath('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartUK/' .. getARZServerNumber() .. '/SmartUK.json', path_uk)
+						downloadFileFromUrlToPath('https://github.com/MTGMODS/lua_scripts/tree/main/justice-helper/SmartUK/' .. getARZServerNumber() .. '/SmartUK.json', path_uk)
 						imgui.OpenPopup(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartuk')
 					end
 					if imgui.BeginPopupModal(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartuk', _, imgui.WindowFlags.NoCollapse  + imgui.WindowFlags.NoResize) then
@@ -4499,7 +4499,7 @@ imgui.OnFrame(
 						end
 						imgui.SameLine()
 						if imgui.Button(fa.CIRCLE_PLAY .. u8' Открыть облако', imgui.ImVec2(300 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
-							openLink('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartUK/')
+							openLink('https://github.com/MTGMODS/lua_scripts/tree/main/justice-helper/SmartUK/')
 							MainWindow[0] = false
 						end
 						imgui.EndPopup()
@@ -4703,7 +4703,7 @@ imgui.OnFrame(
 					imgui.SetCursorPosX(105 * settings.general.custom_dpi)
 					if imgui.Button(fa.DOWNLOAD .. u8' Загрузить ##smartpdd') then
 						download_smartpdd = true
-						downloadFileFromUrlToPath('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartPDD/' .. getARZServerNumber() .. '/SmartPDD.json', path_pdd)
+						downloadFileFromUrlToPath('https://github.com/MTGMODS/lua_scripts/tree/main/justice-helper/SmartPDD/' .. getARZServerNumber() .. '/SmartPDD.json', path_pdd)
 						imgui.OpenPopup(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartpdd')
 					end
 					if imgui.BeginPopupModal(fa.CIRCLE_INFO .. u8' Justice Helper - Оповещение##donwloadsmartpdd', _, imgui.WindowFlags.NoCollapse  + imgui.WindowFlags.NoResize) then
@@ -4727,7 +4727,7 @@ imgui.OnFrame(
 						end
 						imgui.SameLine()
 						if imgui.Button(fa.CIRCLE_PLAY .. u8' Открыть облако', imgui.ImVec2(300 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
-							openLink('https://github.com/MTGMODS/arizona-helper/raw/refs/heads/main/SmartPDD/')
+							openLink('https://github.com/MTGMODS/lua_scripts/tree/main/justice-helper/SmartPDD/')
 							MainWindow[0] = false
 						end
 						imgui.EndPopup()
