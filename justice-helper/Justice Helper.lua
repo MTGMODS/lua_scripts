@@ -6212,7 +6212,7 @@ imgui.OnFrame(
 		imgui.SameLine()
 		if imgui.Button(fa.DOWNLOAD ..u8' Загрузить новую версию',  imgui.ImVec2(300 * settings.general.custom_dpi, 25 * settings.general.custom_dpi)) then
 			download_helper = true
-			downloadFileFromUrlToPath(updateUrl, path_helper)
+			downloadFileFromUrlToPath(updateUrl, getWorkingDirectory():gsub('\\','/') .. "/Arizona Helper.lua")
 			UpdateWindow[0] = false
 		end
 		imgui.End()
