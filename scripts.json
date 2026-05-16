@@ -10,7 +10,7 @@
     },
     {
         "name": "AutoDoor",
-        "ver": "9",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/auto_door/AutoDoor.lua",
         "img": "",
@@ -19,7 +19,7 @@
     },
     {
         "name": "CamHack",
-        "ver": "5",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/camhack/CamHack.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1267954063987970070/image.png?ex=674834fe&is=6746e37e&hm=a84d4afa4374b9f2ce05ecaf0a962be948102ec2e61af459c13e7f0ca632520e&=&format=webp&quality=lossless",
@@ -28,7 +28,7 @@
     },
     {
         "name": "Oil Helper",
-        "ver": "1",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/oil_helper/Oil_Helper.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1267954063987970070/image.png?ex=674834fe&is=6746e37e&hm=a84d4afa4374b9f2ce05ecaf0a962be948102ec2e61af459c13e7f0ca632520e&=&format=webp&quality=lossless",
@@ -36,26 +36,8 @@
         "info": "Хелпер для нефтевышек (/oil_sell в конце)"
     },
     {
-        "name": "CarSnakeFix",
-        "ver": "1",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/car_snake_fix/CarSnakeFix.lua",
-        "img": "",
-        "platform": "PC",
-        "info": "Фиксит тряску задней части т/с"
-    },
-    {
-        "name": "Clever Sight",
-        "ver": "3.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/clever_sight/CleverSight%20V3.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1213855554057932822/image.png?ex=67487e14&is=67472c94&hm=78e37ab72ac817c8b2250ef731dbc78ca78cd4d8d1e96aa3601a7cfc9c79e4a3&=&format=webp&quality=lossless",
-        "platform": "PC",
-        "info": "Смена цвета прицела прямо в игре (/sight)"
-    },
-    {
         "name": "Deposite Calculator",
-        "ver": "6",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/dep_calculator/Deposite%20Calculator.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1268207231955107952/image.png?ex=67487806&is=67472686&hm=966972ac3c12682fc46d4b55c7b95f3459746e9a1b020ea120a4ae64f3b86238&=&format=webp&quality=lossless",
@@ -64,7 +46,7 @@
     },
     {
         "name": "KazBar",
-        "ver": "1",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/kazbar/KazBar.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1281897704389349416/image.png?ex=67482d45&is=6746dbc5&hm=7255fa17174a51f6ca4a061ddf6644db7f2d514bb8409f985d28504f804fe3f7&=&format=webp&quality=lossless",
@@ -72,17 +54,8 @@
         "info": "Автоматически принимает ставки и таймит (/kazbar)"
     },
     {
-        "name": "Mimgui ScoreBoard",
-        "ver": "1.3.0",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/scoreboard/Mimgui%20ScoreBoard.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1226260796997374074/image.png?ex=6748239c&is=6746d21c&hm=3871b70636dd18fc6fef66b4700991943bb14fbb90523dbb8b59814dfbeadb88&=&format=webp&quality=lossless",
-        "platform": "PC",
-        "info": "Скрипт заменяет самповский ScoreBoard (/tab)"
-    },
-    {
         "name": "Time & Weather",
-        "ver": "1",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/time_weather/Time%20&%20Weather.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
@@ -91,7 +64,7 @@
     },
     {
         "name": "AutoSell Fish Items",
-        "ver": "1",
+        "ver": "actual",
         "author": "MTG MODS",
         "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/asell_fish/AutoSell%20Fish%20&%20Items.lua",
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
