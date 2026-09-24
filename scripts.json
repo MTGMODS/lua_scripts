@@ -9,15 +9,6 @@
         "info": "Универсальный /helper для ЛЮБОЙ фракции"
     },
     {
-        "name": "AutoDoor",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/auto_door/AutoDoor.lua",
-        "img": "",
-        "platform": "PC + MOBILE",
-        "info": "Авто-открытие дверей, шлагбаумов, кпп и т.д."
-    },
-    {
         "name": "CamHack",
         "ver": "actual",
         "author": "MTG MODS",
@@ -25,50 +16,5 @@
         "img": "https://media.discordapp.net/attachments/1119664359891800186/1267954063987970070/image.png?ex=674834fe&is=6746e37e&hm=a84d4afa4374b9f2ce05ecaf0a962be948102ec2e61af459c13e7f0ca632520e&=&format=webp&quality=lossless",
         "platform": "PC + MOBILE",
         "info": "Свободное управление камерой (/cmh)"
-    },
-    {
-        "name": "Oil Helper",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/oil_helper/Oil_Helper.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1267954063987970070/image.png?ex=674834fe&is=6746e37e&hm=a84d4afa4374b9f2ce05ecaf0a962be948102ec2e61af459c13e7f0ca632520e&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
-        "info": "Хелпер для нефтевышек (/oil_sell в конце)"
-    },
-    {
-        "name": "Deposite Calculator",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/dep_calculator/Deposite%20Calculator.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1268207231955107952/image.png?ex=67487806&is=67472686&hm=966972ac3c12682fc46d4b55c7b95f3459746e9a1b020ea120a4ae64f3b86238&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
-        "info": "Посчёт прибыли с депозита с условиями (/deposite)"
-    },
-    {
-        "name": "KazBar",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/kazbar/KazBar.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1281897704389349416/image.png?ex=67482d45&is=6746dbc5&hm=7255fa17174a51f6ca4a061ddf6644db7f2d514bb8409f985d28504f804fe3f7&=&format=webp&quality=lossless",
-        "platform": "PC + MOBILE",
-        "info": "Автоматически принимает ставки и таймит (/kazbar)"
-    },
-    {
-        "name": "Time & Weather",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/time_weather/Time%20&%20Weather.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
-        "platform": "PC + MOBILE",
-        "info": "Смена времени и погоды (/shelp)"
-    },
-    {
-        "name": "AutoSell Fish Items",
-        "ver": "actual",
-        "author": "MTG MODS",
-        "link": "https://github.com/MTGMODS/lua_scripts/raw/refs/heads/main/asell_fish/AutoSell%20Fish%20&%20Items.lua",
-        "img": "https://media.discordapp.net/attachments/1119664359891800186/1226236887774265454/Screenshot_2024-04-06-18-06-07-284_com.arizona.game.jpg?ex=6748b618&is=67476498&hm=06f5ab0bbdc3be7cdb8a7d76143738a3de6959566351ba447d1408e54834ebdc&=&format=webp&width=1440&height=648",
-        "platform": "PC + MOBILE",
-        "info": "Автопродажа рыбы и редких вещей"
     }
 ]
